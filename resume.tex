@@ -28,6 +28,46 @@
 \renewcommand{\acvSectionTopSkip}{0mm}
 \renewcommand{\acvSectionContentTopSkip}{0mm}
 
+% Define an entry of coursework information
+% Usage: \centry{<title>}{<location>}{<description>}
+\newcommand*{\centry}[3]{%
+  \vspace{-2.0mm}
+  \setlength\tabcolsep{0pt}
+  \setlength{\extrarowheight}{0pt}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+    \entrytitlestyle{#1} & \entrylocationstyle{#2} \\
+    \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#3}}
+  \end{tabular*}%
+}
+
+% Define an entry of project information
+% Usage: \pentry{<title>}{<date>}{<description>}
+\newcommand*{\pentry}[3]{%
+  \vspace{-2.0mm}
+  \setlength\tabcolsep{0pt}
+  \setlength{\extrarowheight}{0pt}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+    \multicolumn{2}{L{\textwidth}}{\entrytitlestyle{#1}} \\
+    \descriptionstyle{#3} & \entrydatestyle{#2}
+  \end{tabular*}%
+}
+
+% Define an entry of cv information
+% Usage: \cventry{<position>}{<title>}{<location>}{<date>}{<description>}
+\renewcommand*{\cventry}[5]{%
+  \vspace{-2.0mm}
+  \setlength\tabcolsep{0pt}
+  \setlength{\extrarowheight}{0pt}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+    \ifempty{#1#3}
+      {\entrypositionstyle{#2} & \entrydatestyle{#4} \\}
+      {\entrytitlestyle{#1} & \entrylocationstyle{#3} \\
+      \entrypositionstyle{#2} & \entrydatestyle{#4} \\}
+    \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}}
+  \end{tabular*}%
+}
+
+
 % Configure page margins with geometry
 \geometry{left=1.2cm, top=.8cm, right=1.2cm, bottom=0.8cm, footskip=.5cm}
 
@@ -54,7 +94,6 @@
 % If you would like to change the social information separator from a pipe (|) to something else
 \renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
 
-
 %-------------------------------------------------------------------------------
 %	PERSONAL INFORMATION
 %	Comment any of the lines below if they are not required
@@ -62,7 +101,7 @@
 % Available options: circle|rectangle,edge/noedge,left/right
 % \photo[rectangle,edge,right]{./examples/profile}
 \name{Maximilian}{Ammann}
-\address{Klinkerberg 31, 86152 Augsburg}
+\address{Klinkerberg 31, 86152 Augsburg, Germany}
 
 \mobile{+49 176 95845358}
 \email{max@maxammann.org}
@@ -93,6 +132,7 @@
 \input{resume/extracurricular.tex}
 \vspace{-1mm}
 \input{resume/projects.tex}
+% \vspace{-3mm}
 \vspace{-1mm}
 \input{resume/skills.tex}
 \vspace{-1mm}
