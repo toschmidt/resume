@@ -47,8 +47,8 @@
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
-    \multicolumn{2}{L{\textwidth}}{\entrytitlestyle{#1}} \\
-    \descriptionstyle{#3} & \entrydatestyle{#2}
+    \multicolumn{2}{L{\textwidth}}{\entrytitlestyle{#1 (#2)}} \\
+    \descriptionstyle{#3} & {}
   \end{tabular*}%
 }
 
@@ -69,7 +69,7 @@
 
 
 % Configure page margins with geometry
-\geometry{left=1.2cm, top=.8cm, right=1.2cm, bottom=0.8cm, footskip=.5cm}
+\geometry{left=1.2cm, top=.7cm, right=1.2cm, bottom=0.7cm, footskip=.5cm}
 
 % Specify the location of the included fonts
 \fontdir[fonts/]
@@ -123,19 +123,22 @@
 %   {Maximilian Ammann~~~·~~~Résumé}
 %   {}
 
+\vspace{-3mm}
+
+\renewcommand{\arraystretch}{0.9} % Default value: 1
+
 \input{resume/education.tex}
-\vspace{-1mm}
+%\vspace{-3mm}
 \input{resume/experience.tex}
-\vspace{-1mm}
+%\vspace{-3mm}
 \input{resume/coursework.tex}
-\vspace{-1mm}
+%\vspace{-3mm}
 \input{resume/extracurricular.tex}
-\vspace{-1mm}
+%\vspace{-3mm}
 \input{resume/projects.tex}
-% \vspace{-3mm}
-\vspace{-1mm}
+%\vspace{-3mm}
 \input{resume/skills.tex}
-\vspace{-1mm}
+%\vspace{-3mm}
 
 %-------------------------------------------------------------------------------
 \end{document}
