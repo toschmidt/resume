@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TeXtidote analysis</title>
+<style type="text/css">
+body {
+  font-family: sans-serif;
+}
+.highlight, .highlight-sh, .highlight-spelling {
+  padding: 2pt;
+  border-radius: 4pt;
+  cursor: help;
+  opacity: 0.7;
+  border: dashed 1px;
+}
+.highlight {
+  background-color: orange;
+  color: black;
+}
+.highlight-sh {
+  background-color: yellow;
+  color: black;
+}
+.highlight-spelling {
+  background-color: red;
+  color: white;
+}
+div.original-file {
+  font-family: monospace;
+  font-size: 11pt;
+  background-color: #f8f8ff;
+  padding: 20pt;
+  border-radius: 6pt;
+}
+.textidote {
+  	background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIgICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgICB4bWxuczpzb2RpcG9kaT0iaHR0cDovL3NvZGlwb2RpLnNvdXJjZWZvcmdlLm5ldC9EVEQvc29kaXBvZGktMC5kdGQiICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiICAgd2lkdGg9IjEwMC4wOTEwNW1tIiAgIGhlaWdodD0iMTguMjA5MDk5bW0iICAgdmlld0JveD0iMCAwIDEwMC4wOTEwNSAxOC4yMDkwOTkiICAgdmVyc2lvbj0iMS4xIiAgIGlkPSJzdmc4IiAgIGlua3NjYXBlOnZlcnNpb249IjAuOTEgcjEzNzI1IiAgIHNvZGlwb2RpOmRvY25hbWU9InRleHRpZG90ZS5zdmciPiAgPGRlZnMgICAgIGlkPSJkZWZzMiIgLz4gIDxzb2RpcG9kaTpuYW1lZHZpZXcgICAgIGlkPSJiYXNlIiAgICAgcGFnZWNvbG9yPSIjZmZmZmZmIiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiICAgICBib3JkZXJvcGFjaXR5PSIxLjAiICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMC4wIiAgICAgaW5rc2NhcGU6cGFnZXNoYWRvdz0iMiIgICAgIGlua3NjYXBlOnpvb209IjEiICAgICBpbmtzY2FwZTpjeD0iLTI1NC4yNTMwOSIgICAgIGlua3NjYXBlOmN5PSItMjc4LjM3NTkxIiAgICAgaW5rc2NhcGU6ZG9jdW1lbnQtdW5pdHM9Im1tIiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ibGF5ZXIxIiAgICAgc2hvd2dyaWQ9ImZhbHNlIiAgICAgZml0LW1hcmdpbi10b3A9IjAiICAgICBmaXQtbWFyZ2luLWxlZnQ9IjAiICAgICBmaXQtbWFyZ2luLXJpZ2h0PSIwIiAgICAgZml0LW1hcmdpbi1ib3R0b209IjAiICAgICBpbmtzY2FwZTp3aW5kb3ctd2lkdGg9IjE5MjAiICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSIxMDIxIiAgICAgaW5rc2NhcGU6d2luZG93LXg9IjAiICAgICBpbmtzY2FwZTp3aW5kb3cteT0iMjY1IiAgICAgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMSIgLz4gIDxtZXRhZGF0YSAgICAgaWQ9Im1ldGFkYXRhNSI+ICAgIDxyZGY6UkRGPiAgICAgIDxjYzpXb3JrICAgICAgICAgcmRmOmFib3V0PSIiPiAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+ICAgICAgICA8ZGM6dHlwZSAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz4gICAgICAgIDxkYzp0aXRsZSAvPiAgICAgIDwvY2M6V29yaz4gICAgPC9yZGY6UkRGPiAgPC9tZXRhZGF0YT4gIDxnICAgICBpbmtzY2FwZTpsYWJlbD0iTGF5ZXIgMSIgICAgIGlua3NjYXBlOmdyb3VwbW9kZT0ibGF5ZXIiICAgICBpZD0ibGF5ZXIxIiAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTI5LjczODA5NSwtNzAuNTc3NzUxKSI+ICAgIDxnICAgICAgIHN0eWxlPSJmb250LXN0eWxlOm5vcm1hbDtmb250LXdlaWdodDpub3JtYWw7Zm9udC1zaXplOjIwLjkyODk0NTU0cHg7bGluZS1oZWlnaHQ6MS4yNTtmb250LWZhbWlseTpzYW5zLXNlcmlmO2xldHRlci1zcGFjaW5nOjBweDt3b3JkLXNwYWNpbmc6MHB4O2ZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MTtzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS45Nzc1MzgyMztzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZSIgICAgICAgaWQ9InRleHQ4MzYiPiAgICAgIDxwYXRoICAgICAgICAgZD0ibSAzMC43MjY4NjQsNzEuNTY2NTIgNS4yMzIyMzYsMCAwLDQuMjA5MDQ0IDUuODEzNTk2LDAgMCwzLjYwNDQyOSAtNS44MTM1OTYsMCAwLDQuODEzNjU4IDUuODEzNTk2LDAgMCwzLjYwNDQyOSAtMTEuMDQ1ODMyLDAgMCwtMTYuMjMxNTYgeiIgICAgICAgICBzdHlsZT0iZm9udC1zdHlsZTpub3JtYWw7Zm9udC12YXJpYW50Om5vcm1hbDtmb250LXdlaWdodDpub3JtYWw7Zm9udC1zdHJldGNoOm5vcm1hbDtmb250LWZhbWlseTpUdXRvcjstaW5rc2NhcGUtZm9udC1zcGVjaWZpY2F0aW9uOlR1dG9yO2ZpbGw6I2ZmZmZmZjtzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS45Nzc1MzgyMztzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZSIgICAgICAgICBpZD0icGF0aDMzODYiIC8+ICAgICAgPHBhdGggICAgICAgICBkPSJtIDQyLjMzNTg4OCw3NS43NzU1NjQgMTEuMDQ1ODMyLDAgMCw3LjgxMzQ3MyAtNS44MTM1OTYsMCAwLDAuNjA0NjE0IDUuODEzNTk2LDAgMCwzLjYwNDQyOSAtMTEuMDQ1ODMyLDAgMCwtMTIuMDIyNTE2IHogbSA1LjIzMjIzNiw0LjIwOTA0MyAwLjU4MTM2LDAgMCwtMC42MDQ2MTQgLTAuNTgxMzYsMCAwLDAuNjA0NjE0IHoiICAgICAgICAgc3R5bGU9ImZvbnQtc3R5bGU6bm9ybWFsO2ZvbnQtdmFyaWFudDpub3JtYWw7Zm9udC13ZWlnaHQ6bm9ybWFsO2ZvbnQtc3RyZXRjaDpub3JtYWw7Zm9udC1mYW1pbHk6VHV0b3I7LWlua3NjYXBlLWZvbnQtc3BlY2lmaWNhdGlvbjpUdXRvcjtmaWxsOiNmZmZmZmY7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuOTc3NTM4MjM7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmUiICAgICAgICAgaWQ9InBhdGgzMzg4IiAvPiAgICAgIDxwYXRoICAgICAgICAgZD0ibSA1My45NDQ5MTIsNzUuNzc1NTY0IDUuMjMyMjM2LDAgMCwzLjYwNDQyOSAtNS4yMzIyMzYsMCAwLC0zLjYwNDQyOSB6IG0gNS44MTM1OTYsMCA1LjIzMjIzNiwwIDAsMy42MDQ0MjkgLTUuMjMyMjM2LDAgMCwtMy42MDQ0MjkgeiBtIC01LjgxMzU5Niw4LjQxODA4NyA1LjIzMjIzNiwwIDAsMy42MDQ0MjkgLTUuMjMyMjM2LDAgMCwtMy42MDQ0MjkgeiBtIDUuODEzNTk2LDAgNS4yMzIyMzYsMCAwLDMuNjA0NDI5IC01LjIzMjIzNiwwIDAsLTMuNjA0NDI5IHoiICAgICAgICAgc3R5bGU9ImZvbnQtc3R5bGU6bm9ybWFsO2ZvbnQtdmFyaWFudDpub3JtYWw7Zm9udC13ZWlnaHQ6bm9ybWFsO2ZvbnQtc3RyZXRjaDpub3JtYWw7Zm9udC1mYW1pbHk6VHV0b3I7LWlua3NjYXBlLWZvbnQtc3BlY2lmaWNhdGlvbjpUdXRvcjtmaWxsOiNmZmZmZmY7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuOTc3NTM4MjM7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmUiICAgICAgICAgaWQ9InBhdGgzMzkwIiAvPiAgICAgIDxwYXRoICAgICAgICAgZD0ibSA2NS41NTM5MzYsNzEuNTY2NTIgNS4yMzIyMzYsMCAwLDQuMjA5MDQ0IDUuODEzNTk2LDAgMCwzLjYwNDQyOSAtNS44MTM1OTYsMCAwLDQuODEzNjU4IDUuODEzNTk2LDAgMCwzLjYwNDQyOSAtMTEuMDQ1ODMyLDAgMCwtMTYuMjMxNTYgeiIgICAgICAgICBzdHlsZT0iZm9udC1zdHlsZTpub3JtYWw7Zm9udC12YXJpYW50Om5vcm1hbDtmb250LXdlaWdodDpub3JtYWw7Zm9udC1zdHJldGNoOm5vcm1hbDtmb250LWZhbWlseTpUdXRvcjstaW5rc2NhcGUtZm9udC1zcGVjaWZpY2F0aW9uOlR1dG9yO2ZpbGw6I2ZmZmZmZjtzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS45Nzc1MzgyMztzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZSIgICAgICAgICBpZD0icGF0aDMzOTIiIC8+ICAgICAgPHBhdGggICAgICAgICBkPSJtIDc3LjE2Mjk2LDc1Ljc3NTU2NCA1LjIzMjIzNiwwIDAsMTIuMDIyNTE2IC01LjIzMjIzNiwwIDAsLTEyLjAyMjUxNiB6IG0gMCwtNC4yMDkwNDQgNS4yMzIyMzYsMCAwLDMuNjA0NDMgLTUuMjMyMjM2LDAgMCwtMy42MDQ0MyB6IiAgICAgICAgIHN0eWxlPSJmb250LXN0eWxlOm5vcm1hbDtmb250LXZhcmlhbnQ6bm9ybWFsO2ZvbnQtd2VpZ2h0Om5vcm1hbDtmb250LXN0cmV0Y2g6bm9ybWFsO2ZvbnQtZmFtaWx5OlR1dG9yOy1pbmtzY2FwZS1mb250LXNwZWNpZmljYXRpb246VHV0b3I7ZmlsbDojZmZmZmZmO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjk3NzUzODIzO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lIiAgICAgICAgIGlkPSJwYXRoMzM5NCIgLz4gICAgICA8cGF0aCAgICAgICAgIGQ9Im0gODIuOTY3NDcyLDc1Ljc3NTU2NCA1LjgxMzU5NiwwIDAsLTQuMjA5MDQ0IDUuMjMyMjM2LDAgMCwxNi4yMzE1NiAtMTEuMDQ1ODMyLDAgMCwtMTIuMDIyNTE2IHogbSA1LjIzMjIzNiw4LjQxODA4NyAwLjU4MTM2LDAgMCwtNC44MTM2NTggLTAuNTgxMzYsMCAwLDQuODEzNjU4IHoiICAgICAgICAgc3R5bGU9ImZvbnQtc3R5bGU6bm9ybWFsO2ZvbnQtdmFyaWFudDpub3JtYWw7Zm9udC13ZWlnaHQ6bm9ybWFsO2ZvbnQtc3RyZXRjaDpub3JtYWw7Zm9udC1mYW1pbHk6VHV0b3I7LWlua3NjYXBlLWZvbnQtc3BlY2lmaWNhdGlvbjpUdXRvcjtmaWxsOiNmZmZmZmY7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuOTc3NTM4MjM7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmUiICAgICAgICAgaWQ9InBhdGgzMzk2IiAvPiAgICAgIDxwYXRoICAgICAgICAgZD0ibSA5NC41NzY0OTYsNzUuNzc1NTY0IDExLjA0NTgzNCwwIDAsMTIuMDIyNTE2IC0xMS4wNDU4MzQsMCAwLC0xMi4wMjI1MTYgeiBtIDUuMjMyMjM3LDguNDE4MDg3IDAuNTgxMzU3LDAgMCwtNC44MTM2NTggLTAuNTgxMzU3LDAgMCw0LjgxMzY1OCB6IiAgICAgICAgIHN0eWxlPSJmb250LXN0eWxlOm5vcm1hbDtmb250LXZhcmlhbnQ6bm9ybWFsO2ZvbnQtd2VpZ2h0Om5vcm1hbDtmb250LXN0cmV0Y2g6bm9ybWFsO2ZvbnQtZmFtaWx5OlR1dG9yOy1pbmtzY2FwZS1mb250LXNwZWNpZmljYXRpb246VHV0b3I7ZmlsbDojZmZmZmZmO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjk3NzUzODIzO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lIiAgICAgICAgIGlkPSJwYXRoMzM5OCIgLz4gICAgICA8cGF0aCAgICAgICAgIGQ9Im0gMTA2LjE4NTUyLDcxLjU2NjUyIDUuMjMyMjQsMCAwLDQuMjA5MDQ0IDUuODEzNTksMCAwLDMuNjA0NDI5IC01LjgxMzU5LDAgMCw0LjgxMzY1OCA1LjgxMzU5LDAgMCwzLjYwNDQyOSAtMTEuMDQ1ODMsMCAwLC0xNi4yMzE1NiB6IiAgICAgICAgIHN0eWxlPSJmb250LXN0eWxlOm5vcm1hbDtmb250LXZhcmlhbnQ6bm9ybWFsO2ZvbnQtd2VpZ2h0Om5vcm1hbDtmb250LXN0cmV0Y2g6bm9ybWFsO2ZvbnQtZmFtaWx5OlR1dG9yOy1pbmtzY2FwZS1mb250LXNwZWNpZmljYXRpb246VHV0b3I7ZmlsbDojZmZmZmZmO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjk3NzUzODIzO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lIiAgICAgICAgIGlkPSJwYXRoMzQwMCIgLz4gICAgICA8cGF0aCAgICAgICAgIGQ9Im0gMTE3Ljc5NDU0LDc1Ljc3NTU2NCAxMS4wNDU4NCwwIDAsNy44MTM0NzMgLTUuODEzNiwwIDAsMC42MDQ2MTQgNS44MTM2LDAgMCwzLjYwNDQyOSAtMTEuMDQ1ODQsMCAwLC0xMi4wMjI1MTYgeiBtIDUuMjMyMjQsNC4yMDkwNDMgMC41ODEzNiwwIDAsLTAuNjA0NjE0IC0wLjU4MTM2LDAgMCwwLjYwNDYxNCB6IiAgICAgICAgIHN0eWxlPSJmb250LXN0eWxlOm5vcm1hbDtmb250LXZhcmlhbnQ6bm9ybWFsO2ZvbnQtd2VpZ2h0Om5vcm1hbDtmb250LXN0cmV0Y2g6bm9ybWFsO2ZvbnQtZmFtaWx5OlR1dG9yOy1pbmtzY2FwZS1mb250LXNwZWNpZmljYXRpb246VHV0b3I7ZmlsbDojZmZmZmZmO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjk3NzUzODIzO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lIiAgICAgICAgIGlkPSJwYXRoMzQwMiIgLz4gICAgPC9nPiAgPC9nPjwvc3ZnPg==);
+}
+h2.filename {
+  font-family: monospace;
+}
+h1.textidote {
+  width: 378px;
+  height: 68px;
+  display: block;
+}
+.keyword1 {
+  font-weight: bold;
+  color: green;
+}
+.keyword2 {
+  font-weight: bold;
+  color: darkblue;
+}
+.comment, .comment * {
+  color: darkred;
+  font-weight: normal;
+}
+.linenb {
+  font-style: italic;
+  color: lightgrey;
+  width: 30pt;
+  float: left;
+  margin-top: 1pt;
+  margin-bottom: 1pt;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.codeline {
+  margin-left: -30pt;
+  padding-left: 60pt;
+  margin-top: 1pt;
+  margin-bottom: 1pt;
+}
+.no-text {
+  display: none;
+}
+.clear {
+  clear: both;
+}
+</style>
+</head>
+<body>
+<a href="https://sylvainhalle.github.io/textidote"><h1 class="textidote"><span class="no-text">Results of TeXtidote analysis</span></h1></a>
+<p>Here is the result of analyzing your file(s) with TeXtidote. Hover the mouse over highlighted portions of the document to read a tooltip that gives you some writing advice.</p>
+<h2 class="filename">resume/education.tex</h2>
+
+<p>Found 12 warning(s)</p>
+<div class="original-file">
+<div class="linenb">&nbsp;1</div><div class="codeline">\cvsection{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Education, Educations, Education j] (0) [lt:en:MORFOLOGIK_RULE_EN_US]">Education\vphantom{j}</span>}</div><div class="clear"></div>
+<div class="linenb">&nbsp;2</div><div class="codeline"><span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (12) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;3</div><div class="codeline">  \cventry{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [MSC, Mac, MSN, CSC, DSC, ESC, MBC, MDC, MHC, MSF, MST, RSC, Mic, Ms, KSC, LSC, MSI, MSW, MTC, MVC, MWC, Masc, Misc, USC, ASC, BSC, Esc, FSC, GSC, HSC, ISC, MC, MEC, MFC, MHSC, MJC, MLC, MMC, MOC, MPC, MRC, MS, MSA, MSB, MSD, MSE, MSG, MSH, MSK, MSM, MSO, MSR, MSS, MSU, MUC, NSC, OSC, PSC, SC, SMC, Sc, TSC, VSC, WSC, M Sc, MS c] (24) [lt:en:MORFOLOGIK_RULE_EN_US]">MSc</span> with Honors in Elite Graduate Course Software Engineering} <span class="comment">% Degree</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;4</div><div class="codeline">  {Technical University of Munich (TUM), Ludwig Maximilian University of Munich (LMU) and University of Augsburg} <span class="comment">% Institution</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;5</div><div class="codeline">  {Munich and Augsburg} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;6</div><div class="codeline">  {October. 2019 <span class="highlight" title="Consider using an m-dash if you do not want to join two words.. Suggestions: [—] (239) [lt:en:DASH_RULE]">-</span> today} <span class="comment">% Date(s)</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;7</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">&nbsp;8</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (255) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) bullet points</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;9</div><div class="codeline">      <span class="keyword1">\item</span> {Member of \enquote{Elite Network Bavaria}}</div><div class="clear"></div>
+<div class="linenb">10</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (307) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">11</div><div class="codeline">  }<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">12</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">13</div><div class="codeline">  \cventry{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [BSC, BBC, BC, BSA, BSD, MSC, BMC, CSC, DSC, ESC, RSC, SBC, KSC, LSC, BNC, USC, ASC, BCC, BDC, BFC, BGC, BHC, BJC, BKC, BLC, BOC, BPC, BRC, BS, BSB, BSE, BSF, BSG, BSH, BSI, BSK, BSL, BSM, BSN, BSO, BSP, BSQ, BSR, BSS, BST, BSU, BSV, BSW, BSX, BTC, BUC, BVC, BWC, BXC, BYC, BZC, Bic, Esc, FSC, GSC, HSC, ISC, NSC, OSC, PSC, SC, Sc, TSC, VSC, WSC, B Sc, BS c] (321) [lt:en:MORFOLOGIK_RULE_EN_US]">BSc</span> in Computer Science} <span class="comment">% Degree</span></div><div class="clear"></div>
+<div class="linenb">14</div><div class="codeline">  {University of <span class="highlight" title="Possible typo: you repeated a word. Suggestions: [Augsburg] (362) [lt:en:ENGLISH_WORD_REPEAT_RULE]">A</span>ugsburg} <span class="comment">% Institution</span></div><div class="clear"></div>
+<div class="linenb">15</div><div class="codeline">  {Augsburg} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">16</div><div class="codeline">  {October 2016 <span class="highlight" title="Consider using an m-dash if you do not want to join two words.. Suggestions: [—] (399) [lt:en:DASH_RULE]">-</span> today} <span class="comment">% Date(s)</span></div><div class="clear"></div>
+<div class="linenb">17</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">18</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (415) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) bullet points</span></div><div class="clear"></div>
+<div class="linenb">19</div><div class="codeline">      <span class="keyword1">\item</span> {Finished bachelor thesis \enquote{Speech Separation using Deep Clustering} using Deep Neuronal Networks and the TensorFlow Framework}</div><div class="clear"></div>
+<div class="linenb">20</div><div class="codeline">      <span class="keyword1">\item</span> {Minored in Philosophy with a focus on artificial general intelligence}</div><div class="clear"></div>
+<div class="linenb">21</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (633) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">22</div><div class="codeline">  }</div><div class="clear"></div>
+<div class="linenb">23</div><div class="codeline"><span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (644) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+</div>
+<h2 class="filename">resume/coursework.tex</h2>
+
+<p>Found 9 warning(s)</p>
+<div class="original-file">
+<div class="linenb">&nbsp;1</div><div class="codeline">\cvsection{Relevant <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coursework, Coursework j] (9) [lt:en:MORFOLOGIK_RULE_EN_US]">Coursework\vphantom{j}</span>}</div><div class="clear"></div>
+<div class="linenb">&nbsp;2</div><div class="codeline"><span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (22) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;3</div><div class="codeline">  \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [century, entry, gentry, sentry, Gentry, CENTR, c entry] (35) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>centry</div><div class="clear"></div>
+<div class="linenb">&nbsp;4</div><div class="codeline">  {Software Engineering} <span class="comment">% Title</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;5</div><div class="codeline">  {University of Augsburg} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;6</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">&nbsp;7</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (99) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) of experience/contributions/knowledge</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;8</div><div class="codeline">      <span class="keyword1">\item</span> {Methods and patterns for the systematic development of software like Unified Process, UML, Patterns and TDD}</div><div class="clear"></div>
+<div class="linenb">&nbsp;9</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (226) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">10</div><div class="codeline">  }<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">11</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">12</div><div class="codeline">  \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [century, entry, gentry, sentry, Gentry, CENTR, c entry] (241) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>centry</div><div class="clear"></div>
+<div class="linenb">13</div><div class="codeline">  {Cyber Physical Systems} <span class="comment">% Title</span></div><div class="clear"></div>
+<div class="linenb">14</div><div class="codeline">  {University of Augsburg} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">15</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">16</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (307) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) of experience/contributions/knowledge</span></div><div class="clear"></div>
+<div class="linenb">17</div><div class="codeline">      <span class="keyword1">\item</span> {Wrote a seminar paper which considers security relevant aspects of cyber physical systems}</div><div class="clear"></div>
+<div class="linenb">18</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (416) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">19</div><div class="codeline">  }<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">20</div><div class="codeline"><span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (427) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+<div class="linenb">21</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+</div>
+<h2 class="filename">resume/experience.tex</h2>
+
+<p>Found 35 warning(s)</p>
+<div class="original-file">
+<div class="linenb">&nbsp;1</div><div class="codeline">\cvsection{Work Experience}</div><div class="clear"></div>
+<div class="linenb">&nbsp;2</div><div class="codeline"><span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (16) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;3</div><div class="codeline">  \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventry] (29) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventry</div><div class="clear"></div>
+<div class="linenb">&nbsp;4</div><div class="codeline">  {<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Fronted, Front end] (39) [lt:en:MORFOLOGIK_RULE_EN_US]">Frontend</span> Lead Engineer} <span class="comment">% Job title</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;5</div><div class="codeline"> <span class="highlight-sh" title="There should be a space after a period. If you are writing a URL or a filename, use the \url{} or \verb markup. [sh:d:002]"> {\href{https://tuerantuer.or</span>g/}{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Our, Tour, Turn, Fur, Turf, Tar, Tub, Tug, Turk, TCR, TLR, Bur, Cur, Tum, Tut, Eur, Tue, Tux, AUR, BUR, CUR, EUR, MUR, PUR, RUR, SUR, TDR, TER, TFR, TNR, TOR, TPR, TR, TSR, TTR, TU, TUA, TUB, TUG, TUN, TUP, TUV, Thur, Tu, Ur, Tor, Tr, Tun, Turd] (89) [lt:en:MORFOLOGIK_RULE_EN_US]">Tür</span> <span class="highlight" title="Use 'a' instead of 'an' if the following word doesn't start with a vowel sound, e.g. 'a sentence', 'a university'. Suggestions: [a] (93) [lt:en:EN_A_VS_AN]">an</span> <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Our, Tour, Turn, Fur, Turf, Tar, Tub, Tug, Turk, TCR, TLR, Bur, Cur, Tum, Tut, Eur, Tue, Tux, AUR, BUR, CUR, EUR, MUR, PUR, RUR, SUR, TDR, TER, TFR, TNR, TOR, TPR, TR, TSR, TTR, TU, TUA, TUB, TUG, TUN, TUP, TUV, Thur, Tu, Ur, Tor, Tr, Tun, Turd] (96) [lt:en:MORFOLOGIK_RULE_EN_US]">Tür</span> <span class="highlight" title="Consider using an m-dash if you do not want to join two words.. Suggestions: [—] (100) [lt:en:DASH_RULE]">-</span> <span class="highlight-spelling" title="Possible spelling mistake found (102) [lt:en:MORFOLOGIK_RULE_EN_US]">Digitalfabrik</span> <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [GMB, gumbo] (116) [lt:en:MORFOLOGIK_RULE_EN_US]">gGmbH}</span>} <span class="comment">% Organization</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;6</div><div class="codeline">  {Augsburg} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;7</div><div class="codeline">  {March 2017 -- today} <span class="comment">% Date(s)</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;8</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">&nbsp;9</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (166) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) of tasks/responsibilities</span></div><div class="clear"></div>
+<div class="linenb">10</div><div class="codeline">      <span class="keyword1">\item</span> Leading a team for the <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [fronted, front end] (204) [lt:en:MORFOLOGIK_RULE_EN_US]">frontend</span> development of the <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Interest, Integral, Integrate] (232) [lt:en:MORFOLOGIK_RULE_EN_US]">Integreat</span> platform which is used by 55 municipalities in Germany</div><div class="clear"></div>
+<div class="linenb">11</div><div class="codeline">      <span class="keyword1">\item</span> The <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Interest, Integral, Integrate] (307) [lt:en:MORFOLOGIK_RULE_EN_US]">Integreat</span> project was honored as \enquote{Google Lighthouse project} in 2018</div><div class="clear"></div>
+<div class="linenb">12</div><div class="codeline">      <span class="keyword1">\item</span> Designing and developing a Single Page Web Application using <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Reacts] (441) [lt:en:MORFOLOGIK_RULE_EN_US]">ReactJS</span> and <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Red, Reduce, Remix, FedEx, Rex, Relax, Revue, Recur, Reds, Rerun, Rebus, Rebut, Redo, Remus, Redid, Roux, Educ, Redye, CEDEX, EDX, NEDEX, RED, REX, Redis, Regex] (453) [lt:en:MORFOLOGIK_RULE_EN_US]">Redux</span> </div><div class="clear"></div>
+<div class="linenb">13</div><div class="codeline">      <span class="keyword1">\item</span> Designing and developing a native mobile application using React Native</div><div class="clear"></div>
+<div class="linenb">14</div><div class="codeline">      <span class="keyword1">\item</span> Deployed agile development strategies using the Jira Software</div><div class="clear"></div>
+<div class="linenb">15</div><div class="codeline">      <span class="keyword1">\item</span> Built fully automated CI/CD pipelines with automated unit, integration and E2E tests for a mobile (iOS and Android) and web app</div><div class="clear"></div>
+<div class="linenb">16</div><div class="codeline">      <span class="keyword1">\item</span> Administrating cloud infrastructure and hypervisor on bare-metal server  </div><div class="clear"></div>
+<div class="linenb">17</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (824) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span><span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">18</div><div class="codeline">  }<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">19</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">20</div><div class="codeline">  \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventry] (839) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventry</div><div class="clear"></div>
+<div class="linenb">21</div><div class="codeline">  {Full-Stack Developer} <span class="comment">% Job title</span></div><div class="clear"></div>
+<div class="linenb">22</div><div class="codeline"> <span class="highlight-sh" title="There should be a space after a period. If you are writing a URL or a filename, use the \url{} or \verb markup. [sh:d:002]"> {\href{https://www.me</span>curis.com/}{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Secures, Recurs, Mercuric, Mercuries, Mercaris] (898) [lt:en:MORFOLOGIK_RULE_EN_US]">Mecuris</span> <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [GMB] (906) [lt:en:MORFOLOGIK_RULE_EN_US]">GmbH}</span>} <span class="comment">% Organization</span></div><div class="clear"></div>
+<div class="linenb">23</div><div class="codeline">  {Munich} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">24</div><div class="codeline">  {March 2018 -- May 2018} <span class="comment">% Date(s)</span></div><div class="clear"></div>
+<div class="linenb">25</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">26</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (956) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) of tasks/responsibilities</span></div><div class="clear"></div>
+<div class="linenb">27</div><div class="codeline">      <span class="keyword1">\item</span> Development of an e-commerce platform for medial products using modern web technologies</div><div class="clear"></div>
+<div class="linenb">28</div><div class="codeline">      <span class="keyword1">\item</span> Developed a Single Page Web Application using Angular 2.0 by using concepts like Dependency Injection</div><div class="clear"></div>
+<div class="linenb">29</div><div class="codeline">      <span class="keyword1">\item</span> Maintained Linux servers for the testing environment using tools like <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Open SSH, OpenS SH] (1243) [lt:en:MORFOLOGIK_RULE_EN_US]">OpenSSH</span> and BASH</div><div class="clear"></div>
+<div class="linenb">30</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (1264) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span><span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">31</div><div class="codeline">  }<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">32</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">33</div><div class="codeline">  \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventry] (1279) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventry</div><div class="clear"></div>
+<div class="linenb">34</div><div class="codeline">  {Working Student as Software Developer} <span class="comment">% Job title</span></div><div class="clear"></div>
+<div class="linenb">35</div><div class="codeline"> <span class="highlight-sh" title="There should be a space after a period. If you are writing a URL or a filename, use the \url{} or \verb markup. [sh:d:002]"> {\href{https://xitaso.co</span>m}{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Pitas] (1349) [lt:en:MORFOLOGIK_RULE_EN_US]">XITASO</span> <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [GMB] (1356) [lt:en:MORFOLOGIK_RULE_EN_US]">GmbH}</span>} <span class="comment">% Organization</span></div><div class="clear"></div>
+<div class="linenb">36</div><div class="codeline">  {Augsburg} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">37</div><div class="codeline">  {March -- May and Aug. -- Sep. in 2017} <span class="comment">% Date(s)</span></div><div class="clear"></div>
+<div class="linenb">38</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">39</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (1423) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) of tasks/responsibilities</span></div><div class="clear"></div>
+<div class="linenb">40</div><div class="codeline">      <span class="keyword1">\item</span> Development of a web application for Industry 4.0 using <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Angular] (1494) [lt:en:MORFOLOGIK_RULE_EN_US]">AngularJS</span> 1.4</div><div class="clear"></div>
+<div class="linenb">41</div><div class="codeline">      <span class="keyword1">\item</span> Development of a web application for medical products using <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Angular] (1574) [lt:en:MORFOLOGIK_RULE_EN_US]">AngularJS</span> 1.6 and <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Cordoba, Cordovan, Cord ova] (1592) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>Cordova</div><div class="clear"></div>
+<div class="linenb">42</div><div class="codeline">      <span class="keyword1">\item</span> Worked in an agile Scrum team which embraced <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [stand up] (1651) [lt:en:MORFOLOGIK_RULE_EN_US]">standup</span> meetings, backlog grooming, reviews and retrospectives</div><div class="clear"></div>
+<div class="linenb">43</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (1718) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">44</div><div class="codeline">  }<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">45</div><div class="codeline"><span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (1729) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+</div>
+<h2 class="filename">resume/extracurricular.tex</h2>
+
+<p>Found 35 warning(s)</p>
+<div class="original-file">
+<div class="linenb">&nbsp;1</div><div class="codeline">\cvsection{Extracurricular and Volunteering Activity}</div><div class="clear"></div>
+<div class="linenb">&nbsp;2</div><div class="codeline"><span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (42) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;3</div><div class="codeline">  \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventry] (55) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventry</div><div class="clear"></div>
+<div class="linenb">&nbsp;4</div><div class="codeline">  {Meetup <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Organization, Organist, Organists] (72) [lt:en:MORFOLOGIK_RULE_EN_US]">Organisator}</span> <span class="comment">% Affiliation/role</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;5</div><div class="codeline"> <span class="highlight-sh" title="There should be a space after a period. If you are writing a URL or a filename, use the \url{} or \verb markup. [sh:d:002]"> {\href{http://webandwine.or</span>g/}{Web\<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [wine, swine, twine, WINE] (114) [lt:en:MORFOLOGIK_RULE_EN_US]">&amp;Wine}</span>} <span class="comment">% Organization/group</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;6</div><div class="codeline">  {Augsburg} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;7</div><div class="codeline">  {December 2019 -- today} <span class="comment">% Date(s)</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;8</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">&nbsp;9</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (167) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) of experience/contributions/knowledge</span></div><div class="clear"></div>
+<div class="linenb">10</div><div class="codeline">      <span class="keyword1">\item</span> Organizing monthly meetups for 60-100 web developers, designers and technology enthusiasts at local IT companies</div><div class="clear"></div>
+<div class="linenb">11</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (299) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">12</div><div class="codeline">  }<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">13</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">14</div><div class="codeline">  \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventry] (314) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventry</div><div class="clear"></div>
+<div class="linenb">15</div><div class="codeline">  {Developer for Computer Vision} <span class="comment">% Affiliation/role</span></div><div class="clear"></div>
+<div class="linenb">16</div><div class="codeline">  {Augsburg University of Applied Sciences} <span class="comment">% Organization/group</span></div><div class="clear"></div>
+<div class="linenb">17</div><div class="codeline">  {Berlin and Augsburg} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">18</div><div class="codeline">  {November 2018 -- today} <span class="comment">% Date(s)</span></div><div class="clear"></div>
+<div class="linenb">19</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">20</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (454) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) of experience/contributions/knowledge</span></div><div class="clear"></div>
+<div class="linenb">21</div><div class="codeline">      <span class="keyword1">\item</span> Organized a Deep Learning <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Vacation, Marathon, Saskatoon, Lactation] (495) [lt:en:MORFOLOGIK_RULE_EN_US]">Hackathon</span> with ~50 participants in Berlin as part of the <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Searching] (552) [lt:en:MORFOLOGIK_RULE_EN_US]">SearchWing</span> project</div><div class="clear"></div>
+<div class="linenb">22</div><div class="codeline">      <span class="keyword1">\item</span> Development of a computer vision system for a fixed wing drone using the<span class="highlight-sh" title="There should be a space after a period. If you are writing a URL or a filename, use the \url{} or \verb markup. [sh:d:002]"> \href{https://www.ro</span>s.org/}{Robotic Operating System (ROS)},<span class="highlight-sh" title="There should be a space after a period. If you are writing a URL or a filename, use the \url{} or \verb markup. [sh:d:002]"> \href{https://mavlink.io</span>/en/}{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [mailing, Marlin, marlin, mauling, marlins] (726) [lt:en:MORFOLOGIK_RULE_EN_US]">mavlink}</span> and<span class="highlight-sh" title="There should be a space after a period. If you are writing a URL or a filename, use the \url{} or \verb markup. [sh:d:002]"> \href{https://opencv.or</span>g/}{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Open CV] (758) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>OpenCV}</div><div class="clear"></div>
+<div class="linenb">23</div><div class="codeline">      <span class="keyword1">\item</span> Deployed ROS on an embedded system with ARMv6 architecture (Raspberry Pi Zero)</div><div class="clear"></div>
+<div class="linenb">24</div><div class="codeline">      <span class="keyword1">\item</span> Assisted with carrying out test flights in the Mediterranean Sea and recorded video footage for later machine learning projects</div><div class="clear"></div>
+<div class="linenb">25</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (988) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">26</div><div class="codeline">  }<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">27</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">28</div><div class="codeline">  \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventry] (1003) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventry</div><div class="clear"></div>
+<div class="linenb">29</div><div class="codeline">  {Network Administrator} <span class="comment">% Affiliation/role</span></div><div class="clear"></div>
+<div class="linenb">30</div><div class="codeline">  {<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Our, Tour, Turn, Fur, Turf, Tar, Tub, Tug, Turk, TCR, TLR, Bur, Cur, Tum, Tut, Eur, Tue, Tux, AUR, BUR, CUR, EUR, MUR, PUR, RUR, SUR, TDR, TER, TFR, TNR, TOR, TPR, TR, TSR, TTR, TU, TUA, TUB, TUG, TUN, TUP, TUV, Thur, Tu, Ur, Tor, Tr, Tun, Turd] (1038) [lt:en:MORFOLOGIK_RULE_EN_US]">Tür</span> <span class="highlight" title="Use 'a' instead of 'an' if the following word doesn't start with a vowel sound, e.g. 'a sentence', 'a university'. Suggestions: [a] (1042) [lt:en:EN_A_VS_AN]">an</span> <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Our, Tour, Turn, Fur, Turf, Tar, Tub, Tug, Turk, TCR, TLR, Bur, Cur, Tum, Tut, Eur, Tue, Tux, AUR, BUR, CUR, EUR, MUR, PUR, RUR, SUR, TDR, TER, TFR, TNR, TOR, TPR, TR, TSR, TTR, TU, TUA, TUB, TUG, TUN, TUP, TUV, Thur, Tu, Ur, Tor, Tr, Tun, Turd] (1045) [lt:en:MORFOLOGIK_RULE_EN_US]">Tür</span> <span class="highlight" title="Consider using an m-dash if you do not want to join two words.. Suggestions: [—] (1049) [lt:en:DASH_RULE]">-</span> <span class="highlight-spelling" title="Possible spelling mistake found (1051) [lt:en:MORFOLOGIK_RULE_EN_US]">Digitalfabrik</span> <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [GMB, gumbo] (1065) [lt:en:MORFOLOGIK_RULE_EN_US]">gGmbH}</span> <span class="comment">% Organization/group</span></div><div class="clear"></div>
+<div class="linenb">31</div><div class="codeline">  {Augsburg} <span class="comment">% Location</span></div><div class="clear"></div>
+<div class="linenb">32</div><div class="codeline">  {November 2017 -- today} <span class="comment">% Date(s)</span></div><div class="clear"></div>
+<div class="linenb">33</div><div class="codeline">  {</div><div class="clear"></div>
+<div class="linenb">34</div><div class="codeline">    <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (1117) [lt:en:MORFOLOGIK_RULE_EN_US]">cvitems}</span></span> <span class="comment">% Description(s) of experience/contributions/knowledge</span></div><div class="clear"></div>
+<div class="linenb">35</div><div class="codeline">      <span class="keyword1">\item</span> Initial installation and administration of a distributed <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Plan, Clan, Alan, Klan, Wan, Wean, Flan, Elan, LAN, VLAN, W LAN, Élan] (1189) [lt:en:MORFOLOGIK_RULE_EN_US]">WLAN</span> using s <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [sense, offense] (1202) [lt:en:MORFOLOGIK_RULE_EN_US]">pfSense</span> firewall and <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Unify, UNIFIL] (1223) [lt:en:MORFOLOGIK_RULE_EN_US]">UniFi</span> access points \<span class="highlight-spelling" title="Possible spelling mistake found (1244) [lt:en:MORFOLOGIK_RULE_EN_US]">textasciitilde</span> 500~users at 5 sites</div><div class="clear"></div>
+<div class="linenb">36</div><div class="codeline">      <span class="keyword1">\item</span> Setup distributed user synchronization between multiple sites using a MySQL database and a<span class="highlight-sh" title="There should be a space after a period. If you are writing a URL or a filename, use the \url{} or \verb markup. [sh:d:002]"> \href{https://freeradius.or</span>g/}{<span class="highlight-spelling" title="Possible spelling mistake found (1401) [lt:en:MORFOLOGIK_RULE_EN_US]">FreeRADIUS}</span> server <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [nonphysical] (1419) [lt:en:MORFOLOGIK_RULE_EN_US]">forphyisical</span> <span class="highlight-spelling" title="Possible spelling mistake found (1432) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>AAAphyisical</div><div class="clear"></div>
+<div class="linenb">37</div><div class="codeline">    <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (1449) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">38</div><div class="codeline">  }</div><div class="clear"></div>
+<div class="linenb">39</div><div class="codeline"><span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (1460) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+<div class="linenb">40</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+</div>
+<h2 class="filename">resume/projects.tex</h2>
+
+<p>Found 12 warning(s)</p>
+<div class="original-file">
+<div class="linenb">&nbsp;1</div><div class="codeline">\cvsection{Personal Projects}</div><div class="clear"></div>
+<div class="linenb">&nbsp;2</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;3</div><div class="codeline"><span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (19) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;4</div><div class="codeline">    \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [entry, gentry, sentry, Gentry, pantry, penury, p entry, pen try] (34) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>pentry</div><div class="clear"></div>
+<div class="linenb">&nbsp;5</div><div class="codeline">    {Alarm Clock}</div><div class="clear"></div>
+<div class="linenb">&nbsp;6</div><div class="codeline">    {2016}</div><div class="clear"></div>
+<div class="linenb">&nbsp;7</div><div class="codeline">    {</div><div class="clear"></div>
+<div class="linenb">&nbsp;8</div><div class="codeline">        <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (79) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;9</div><div class="codeline">            <span class="keyword1">\item</span> {Display with LED Matrix with an Android App using a C++ <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Restful, Zestful] (155) [lt:en:MORFOLOGIK_RULE_EN_US]">RESTful</span> <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [backed, back end] (163) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>backend}</div><div class="clear"></div>
+<div class="linenb">10</div><div class="codeline">        <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (179) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">11</div><div class="codeline">    }<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">12</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">13</div><div class="codeline">    \<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [entry, gentry, sentry, Gentry, pantry, penury, p entry, pen try] (198) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>pentry</div><div class="clear"></div>
+<div class="linenb">14</div><div class="codeline">    {Lighting Control}</div><div class="clear"></div>
+<div class="linenb">15</div><div class="codeline">    {2015}</div><div class="clear"></div>
+<div class="linenb">16</div><div class="codeline">    {</div><div class="clear"></div>
+<div class="linenb">17</div><div class="codeline">        <span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (248) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">18</div><div class="codeline">            <span class="keyword1">\item</span> {Control of mains voltage in the garden with a web <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [friend, frozen, fronted, Friend, frowned, frond, ironed, droned] (318) [lt:en:MORFOLOGIK_RULE_EN_US]">fronend</span> and a Python <span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [backed, back end] (339) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>backend}</div><div class="clear"></div>
+<div class="linenb">19</div><div class="codeline">        <span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [items, cites] (355) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvitems}</span></div><div class="clear"></div>
+<div class="linenb">20</div><div class="codeline">    }</div><div class="clear"></div>
+<div class="linenb">21</div><div class="codeline"><span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Coventries] (368) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cventries}</span></div><div class="clear"></div>
+</div>
+<h2 class="filename">resume/skills.tex</h2>
+
+<p>Found 4 warning(s)</p>
+<div class="original-file">
+<div class="linenb">1</div><div class="codeline">\cvsection{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [Skills, Skills j] (0) [lt:en:MORFOLOGIK_RULE_EN_US]">Skills\vphantom{j}</span>}</div><div class="clear"></div>
+<div class="linenb">2</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">3</div><div class="codeline"><span class="keyword2">\begin{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [skills, Catskills, deskills] (10) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvskills}</span></div><div class="clear"></div>
+<div class="linenb">4</div><div class="codeline">\cvskill{Technical Skills}{JavaScript (React, React Native), HTML, CSS, Linux, CI/DI with Jenkins,<span class="highlight-sh" title="There should be a space after a period. If you are writing a URL or a filename, use the \url{} or \verb markup. [sh:d:002]"> \href{https://www.ro</span>s.org/}{ROS}, C/C++, Python with TensorFlow}</div><div class="clear"></div>
+<div class="linenb">5</div><div class="codeline">\cvskill{Languages}{German, English}</div><div class="clear"></div>
+<div class="linenb">6</div><div class="codeline"><span class="keyword2">\end{<span class="highlight-spelling" title="Possible spelling mistake found. Suggestions: [skills, Catskills, deskills] (190) [lt:en:MORFOLOGIK_RULE_EN_US]"></span>cvskills}</span></div><div class="clear"></div>
+</div>
+<h2 class="filename">resume.tex</h2>
+
+<p>Found 1 warning(s)</p>
+<div class="original-file">
+<div class="linenb">&nbsp;&nbsp;1</div><div class="codeline"><span class="comment"><span class="comment">%!TEX TS-program = xelatex</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;&nbsp;2</div><div class="codeline"><span class="comment"><span class="comment">%!TEX encoding = UTF-8 Unicode</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;&nbsp;3</div><div class="codeline"><span class="comment"><span class="comment">% Awesome CV LaTeX Template for CV/Resume</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;&nbsp;4</div><div class="codeline"><span class="comment"><span class="comment">%</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;&nbsp;5</div><div class="codeline"><span class="comment"><span class="comment">% This template has been downloaded from:</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;&nbsp;6</div><div class="codeline"><span class="comment"><span class="comment">% https://github.com/posquit0/Awesome-CV</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;&nbsp;7</div><div class="codeline"><span class="comment"><span class="comment">%</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;&nbsp;8</div><div class="codeline"><span class="comment"><span class="comment">% Author:</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;&nbsp;9</div><div class="codeline"><span class="comment"><span class="comment">% Claud D. Park &lt;posquit0.bj@gmail.com&gt;</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;10</div><div class="codeline"><span class="comment"><span class="comment">% http://www.posquit0.com</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;11</div><div class="codeline"><span class="comment"><span class="comment">%</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;12</div><div class="codeline"><span class="comment"><span class="comment">% Template license:</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;13</div><div class="codeline"><span class="comment"><span class="comment">% CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;14</div><div class="codeline"><span class="comment"><span class="comment">%</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;15</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;16</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;17</div><div class="codeline"><span class="comment"><span class="comment">%-------------------------------------------------------------------------------</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;18</div><div class="codeline"><span class="comment"><span class="comment">% CONFIGURATIONS</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;19</div><div class="codeline"><span class="comment"><span class="comment">%-------------------------------------------------------------------------------</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;20</div><div class="codeline"><span class="comment"><span class="comment">% A4 paper size by default, use 'letterpaper' for US letter</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;21</div><div class="codeline"><span class="keyword1">\documentclass</span>[11pt, a4paper]{awesome-cv}</div><div class="clear"></div>
+<div class="linenb">&nbsp;22</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;23</div><div class="codeline"><span class="keyword1">\usepackage</span>{csquotes}</div><div class="clear"></div>
+<div class="linenb">&nbsp;24</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;25</div><div class="codeline">\renewcommand{\acvHeaderAfterSocialSkip}{0mm}</div><div class="clear"></div>
+<div class="linenb">&nbsp;26</div><div class="codeline">\renewcommand{\acvHeaderAfterQuoteSkip}{0mm}</div><div class="clear"></div>
+<div class="linenb">&nbsp;27</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;28</div><div class="codeline">\renewcommand{\acvSectionTopSkip}{0mm}</div><div class="clear"></div>
+<div class="linenb">&nbsp;29</div><div class="codeline">\renewcommand{\acvSectionContentTopSkip}{0mm}</div><div class="clear"></div>
+<div class="linenb">&nbsp;30</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;31</div><div class="codeline"><span class="comment"><span class="comment">% Define an entry of coursework information</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;32</div><div class="codeline"><span class="comment"><span class="comment">% Usage: \centry{&lt;title&gt;}{&lt;location&gt;}{&lt;description&gt;}</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;33</div><div class="codeline">\newcommand*{\centry}[3]{<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;34</div><div class="codeline">  \vspace{-2.0mm}</div><div class="clear"></div>
+<div class="linenb">&nbsp;35</div><div class="codeline">  \setlength\tabcolsep{0pt}</div><div class="clear"></div>
+<div class="linenb">&nbsp;36</div><div class="codeline">  \setlength{\extrarowheight}{0pt}</div><div class="clear"></div>
+<div class="linenb">&nbsp;37</div><div class="codeline">  <span class="keyword2">\begin{tabular*}</span>{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}</div><div class="clear"></div>
+<div class="linenb">&nbsp;38</div><div class="codeline">    \entrytitlestyle{#1} &amp; \entrylocationstyle{#2} \\</div><div class="clear"></div>
+<div class="linenb">&nbsp;39</div><div class="codeline">    \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#3}}</div><div class="clear"></div>
+<div class="linenb">&nbsp;40</div><div class="codeline">  <span class="keyword2">\end{tabular*}</span><span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;41</div><div class="codeline">}</div><div class="clear"></div>
+<div class="linenb">&nbsp;42</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;43</div><div class="codeline"><span class="comment"><span class="comment">% Define an entry of project information</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;44</div><div class="codeline"><span class="comment"><span class="comment">% Usage: \pentry{&lt;title&gt;}{&lt;date&gt;}{&lt;description&gt;}</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;45</div><div class="codeline">\newcommand*{\pentry}[3]{<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;46</div><div class="codeline">  \vspace{-2.0mm}</div><div class="clear"></div>
+<div class="linenb">&nbsp;47</div><div class="codeline">  \setlength\tabcolsep{0pt}</div><div class="clear"></div>
+<div class="linenb">&nbsp;48</div><div class="codeline">  \setlength{\extrarowheight}{0pt}</div><div class="clear"></div>
+<div class="linenb">&nbsp;49</div><div class="codeline">  <span class="keyword2">\begin{tabular*}</span>{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}</div><div class="clear"></div>
+<div class="linenb">&nbsp;50</div><div class="codeline">    \multicolumn{2}{L{\textwidth}}{\entrytitlestyle{#1 (#2)}} \\</div><div class="clear"></div>
+<div class="linenb">&nbsp;51</div><div class="codeline">    \descriptionstyle{#3} &amp; {}</div><div class="clear"></div>
+<div class="linenb">&nbsp;52</div><div class="codeline">  <span class="keyword2">\end{tabular*}</span><span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;53</div><div class="codeline">}</div><div class="clear"></div>
+<div class="linenb">&nbsp;54</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;55</div><div class="codeline"><span class="comment"><span class="comment">% Define an entry of cv information</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;56</div><div class="codeline"><span class="comment"><span class="comment">% Usage: \cventry{&lt;position&gt;}{&lt;title&gt;}{&lt;location&gt;}{&lt;date&gt;}{&lt;description&gt;}</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;57</div><div class="codeline">\renewcommand*{\cventry}[5]{<span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;58</div><div class="codeline">  \vspace{-2.0mm}</div><div class="clear"></div>
+<div class="linenb">&nbsp;59</div><div class="codeline">  \setlength\tabcolsep{0pt}</div><div class="clear"></div>
+<div class="linenb">&nbsp;60</div><div class="codeline">  \setlength{\extrarowheight}{0pt}</div><div class="clear"></div>
+<div class="linenb">&nbsp;61</div><div class="codeline">  <span class="keyword2">\begin{tabular*}</span>{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}</div><div class="clear"></div>
+<div class="linenb">&nbsp;62</div><div class="codeline">    \ifempty{#1#3}</div><div class="clear"></div>
+<div class="linenb">&nbsp;63</div><div class="codeline">      {\entrypositionstyle{#2} &amp; \entrydatestyle{#4} \\}</div><div class="clear"></div>
+<div class="linenb">&nbsp;64</div><div class="codeline">      {\entrytitlestyle{#1} &amp; \entrylocationstyle{#3} \\</div><div class="clear"></div>
+<div class="linenb">&nbsp;65</div><div class="codeline">      \entrypositionstyle{#2} &amp; \entrydatestyle{#4} \\}</div><div class="clear"></div>
+<div class="linenb">&nbsp;66</div><div class="codeline">    \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}}</div><div class="clear"></div>
+<div class="linenb">&nbsp;67</div><div class="codeline">  <span class="keyword2">\end{tabular*}</span><span class="comment">%</span></div><div class="clear"></div>
+<div class="linenb">&nbsp;68</div><div class="codeline">}</div><div class="clear"></div>
+<div class="linenb">&nbsp;69</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;70</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;71</div><div class="codeline"><span class="comment"><span class="comment">% Configure page margins with geometry</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;72</div><div class="codeline">\geometry{left=1.2cm, top=.7cm, right=1.2cm, bottom=0.7cm, footskip=.5cm}</div><div class="clear"></div>
+<div class="linenb">&nbsp;73</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;74</div><div class="codeline"><span class="comment"><span class="comment">% Specify the location of the included fonts</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;75</div><div class="codeline">\fontdir[fonts/]</div><div class="clear"></div>
+<div class="linenb">&nbsp;76</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;77</div><div class="codeline"><span class="comment"><span class="comment">% Color for highlights</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;78</div><div class="codeline"><span class="comment"><span class="comment">% Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;79</div><div class="codeline"><span class="comment"><span class="comment">%                 awesome-nephritis, awesome-concrete, awesome-darknight</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;80</div><div class="codeline">\colorlet{awesome}{awesome-red}</div><div class="clear"></div>
+<div class="linenb">&nbsp;81</div><div class="codeline"><span class="comment"><span class="comment">% Uncomment if you would like to specify your own color</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;82</div><div class="codeline"><span class="comment"><span class="comment">% \definecolor{awesome}{HTML}{CA63A8}</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;83</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;84</div><div class="codeline"><span class="comment"><span class="comment">% Colors for text</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;85</div><div class="codeline"><span class="comment"><span class="comment">% Uncomment if you would like to specify your own color</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;86</div><div class="codeline"><span class="comment"><span class="comment">% \definecolor{darktext}{HTML}{414141}</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;87</div><div class="codeline"><span class="comment"><span class="comment">% \definecolor{text}{HTML}{333333}</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;88</div><div class="codeline"><span class="comment"><span class="comment">% \definecolor{graytext}{HTML}{5D5D5D}</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;89</div><div class="codeline"><span class="comment"><span class="comment">% \definecolor{lighttext}{HTML}{999999}</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;90</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;91</div><div class="codeline"><span class="comment"><span class="comment">% Set false if you don't want to highlight section with awesome color</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;92</div><div class="codeline">\setbool{acvSectionColorHighlight}{true}</div><div class="clear"></div>
+<div class="linenb">&nbsp;93</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;94</div><div class="codeline"><span class="comment"><span class="comment">% If you would like to change the social information separator from a pipe (|) to something else</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;95</div><div class="codeline">\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}</div><div class="clear"></div>
+<div class="linenb">&nbsp;96</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">&nbsp;97</div><div class="codeline"><span class="comment"><span class="comment">%-------------------------------------------------------------------------------</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;98</div><div class="codeline"><span class="comment"><span class="comment">%	PERSONAL INFORMATION</span></span></div><div class="clear"></div>
+<div class="linenb">&nbsp;99</div><div class="codeline"><span class="comment"><span class="comment">%	Comment any of the lines below if they are not required</span></span></div><div class="clear"></div>
+<div class="linenb">100</div><div class="codeline"><span class="comment"><span class="comment">%-------------------------------------------------------------------------------</span></span></div><div class="clear"></div>
+<div class="linenb">101</div><div class="codeline"><span class="comment"><span class="comment">% Available options: circle|rectangle,edge/noedge,left/right</span></span></div><div class="clear"></div>
+<div class="linenb">102</div><div class="codeline"><span class="comment"><span class="comment">% \photo[rectangle,edge,right]{./examples/profile}</span></span></div><div class="clear"></div>
+<div class="linenb">103</div><div class="codeline">\name{Maximilian}{Ammann}</div><div class="clear"></div>
+<div class="linenb">104</div><div class="codeline">\address{Klinkerberg 31, 86152 Augsburg, Germany}</div><div class="clear"></div>
+<div class="linenb">105</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">106</div><div class="codeline">\mobile{+49 176 95845358}</div><div class="clear"></div>
+<div class="linenb">107</div><div class="codeline">\email{max@maxammann.org}</div><div class="clear"></div>
+<div class="linenb">108</div><div class="codeline">\homepage{maxammann.org}</div><div class="clear"></div>
+<div class="linenb">109</div><div class="codeline">\github{maxammann}</div><div class="clear"></div>
+<div class="linenb">110</div><div class="codeline">\linkedin{maximilian.ammann}</div><div class="clear"></div>
+<div class="linenb">111</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">112</div><div class="codeline"><span class="comment"><span class="comment">%-------------------------------------------------------------------------------</span></span></div><div class="clear"></div>
+<div class="linenb">113</div><div class="codeline"><span class="keyword2">\begin{document}</span></div><div class="clear"></div>
+<div class="linenb">114</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">115</div><div class="codeline"><span class="comment"><span class="comment">% Print the header with above personal informations</span></span></div><div class="clear"></div>
+<div class="linenb">116</div><div class="codeline"><span class="comment"><span class="comment">% Give optional argument to change alignment(C: center, L: left, R: right)</span></span></div><div class="clear"></div>
+<div class="linenb">117</div><div class="codeline">\<span class="highlight-spelling" title="Possible spelling mistake found (2) [lt:en:MORFOLOGIK_RULE_EN_US]">makecvheader</span>[C]</div><div class="clear"></div>
+<div class="linenb">118</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">119</div><div class="codeline"><span class="comment"><span class="comment">% Print the footer with 3 arguments(&lt;left&gt;, &lt;center&gt;, &lt;right&gt;)</span></span></div><div class="clear"></div>
+<div class="linenb">120</div><div class="codeline"><span class="comment"><span class="comment">% Leave any of these blank if they are not needed</span></span></div><div class="clear"></div>
+<div class="linenb">121</div><div class="codeline"><span class="comment"><span class="comment">% \makecvfooter</span></span></div><div class="clear"></div>
+<div class="linenb">122</div><div class="codeline"><span class="comment"><span class="comment">%   {\today}</span></span></div><div class="clear"></div>
+<div class="linenb">123</div><div class="codeline"><span class="comment"><span class="comment">%   {Maximilian Ammann~~~·~~~Résumé}</span></span></div><div class="clear"></div>
+<div class="linenb">124</div><div class="codeline"><span class="comment"><span class="comment">%   {}</span></span></div><div class="clear"></div>
+<div class="linenb">125</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">126</div><div class="codeline">\vspace{-3mm}</div><div class="clear"></div>
+<div class="linenb">127</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">128</div><div class="codeline">\renewcommand{\arraystretch}{0.9} <span class="comment">% Default value: 1</span></div><div class="clear"></div>
+<div class="linenb">129</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">130</div><div class="codeline">\input{resume/education.tex}</div><div class="clear"></div>
+<div class="linenb">131</div><div class="codeline"><span class="comment"><span class="comment">%\vspace{-3mm}</span></span></div><div class="clear"></div>
+<div class="linenb">132</div><div class="codeline">\input{resume/experience.tex}</div><div class="clear"></div>
+<div class="linenb">133</div><div class="codeline"><span class="comment"><span class="comment">%\vspace{-3mm}</span></span></div><div class="clear"></div>
+<div class="linenb">134</div><div class="codeline">\input{resume/coursework.tex}</div><div class="clear"></div>
+<div class="linenb">135</div><div class="codeline"><span class="comment"><span class="comment">%\vspace{-3mm}</span></span></div><div class="clear"></div>
+<div class="linenb">136</div><div class="codeline">\input{resume/extracurricular.tex}</div><div class="clear"></div>
+<div class="linenb">137</div><div class="codeline"><span class="comment"><span class="comment">%\vspace{-3mm}</span></span></div><div class="clear"></div>
+<div class="linenb">138</div><div class="codeline">\input{resume/projects.tex}</div><div class="clear"></div>
+<div class="linenb">139</div><div class="codeline"><span class="comment"><span class="comment">%\vspace{-3mm}</span></span></div><div class="clear"></div>
+<div class="linenb">140</div><div class="codeline">\input{resume/skills.tex}</div><div class="clear"></div>
+<div class="linenb">141</div><div class="codeline"><span class="comment"><span class="comment">%\vspace{-3mm}</span></span></div><div class="clear"></div>
+<div class="linenb">142</div><div class="codeline">&nbsp;</div><div class="clear"></div>
+<div class="linenb">143</div><div class="codeline"><span class="comment"><span class="comment">%-------------------------------------------------------------------------------</span></span></div><div class="clear"></div>
+<div class="linenb">144</div><div class="codeline"><span class="keyword2">\end{document}</span></div><div class="clear"></div>
+</div>
+<hr/>
+Output produced by TeXtidote v0.8.1, &copy; 2018-2019 Sylvain Hall&eacute; - All rights reserved.<br/>
+See the <a href="https://sylvainhalle.github.io/sylvainhalle/textidote">TeXtidote website</a> for more information.
+</body>
+</html>

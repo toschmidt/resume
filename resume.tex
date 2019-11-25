@@ -29,14 +29,14 @@
 \renewcommand{\acvSectionContentTopSkip}{0mm}
 
 % Define an entry of coursework information
-% Usage: \centry{<title>}{<location>}{<description>}
-\newcommand*{\centry}[3]{%
+% Usage: \centry{<title>}{<location>}{<date>}{<description>}
+\newcommand*{\centry}[4]{%
   \vspace{-2.0mm}
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
-  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 3cm} R{3cm}}
     \entrytitlestyle{#1} & \entrylocationstyle{#2} \\
-    \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#3}}
+    \descriptionstyle{#4} & \entrydatestyle{#3} 
   \end{tabular*}%
 }
 
@@ -77,7 +77,7 @@
 % Color for highlights
 % Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
 %                 awesome-nephritis, awesome-concrete, awesome-darknight
-\colorlet{awesome}{awesome-red}
+\colorlet{awesome}{awesome-darknight}
 % Uncomment if you would like to specify your own color
 % \definecolor{awesome}{HTML}{CA63A8}
 
@@ -129,9 +129,9 @@
 
 \input{resume/education.tex}
 %\vspace{-3mm}
-\input{resume/experience.tex}
-%\vspace{-3mm}
 \input{resume/coursework.tex}
+%\vspace{-3mm}
+\input{resume/experience.tex}
 %\vspace{-3mm}
 \input{resume/extracurricular.tex}
 %\vspace{-3mm}
