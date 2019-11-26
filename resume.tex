@@ -21,6 +21,20 @@
 \documentclass[11pt, a4paper]{awesome-cv}
 
 \usepackage{csquotes}
+\usepackage[defaultsans]{opensans}
+
+\renewcommand{\headerfont}{\opensans}
+\renewcommand{\headerfontlight}{\opensans\fontseries{l}\selectfont}
+
+\renewcommand*{\footerfont}{\opensans}
+\renewcommand*{\bodyfont}{\opensans}
+\renewcommand*{\bodyfontlight}{\opensans\fontseries{l}\selectfont}
+
+
+\renewcommand*{\entrypositionstyle}[1]{{\fontsize{7pt}{1em}\bodyfont\scshape\color{graytext} #1}}
+\renewcommand*{\entrydatestyle}[1]{{\fontsize{7pt}{1em}\bodyfontlight\color{graytext} #1}}
+\renewcommand*{\entrylocationstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\color{awesome} #1}}
+\renewcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
 
 \renewcommand{\acvHeaderAfterSocialSkip}{0mm}
 \renewcommand{\acvHeaderAfterQuoteSkip}{0mm}
@@ -77,9 +91,9 @@
 % Color for highlights
 % Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
 %                 awesome-nephritis, awesome-concrete, awesome-darknight
-\colorlet{awesome}{awesome-darknight}
+\colorlet{awesome}{awesome-red}
 % Uncomment if you would like to specify your own color
-% \definecolor{awesome}{HTML}{CA63A8}
+% \definecolor{awesome}{HTML}{000000}
 
 % Colors for text
 % Uncomment if you would like to specify your own color
@@ -89,7 +103,7 @@
 % \definecolor{lighttext}{HTML}{999999}
 
 % Set false if you don't want to highlight section with awesome color
-\setbool{acvSectionColorHighlight}{true}
+\setbool{acvSectionColorHighlight}{false}
 
 % If you would like to change the social information separator from a pipe (|) to something else
 \renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
@@ -128,17 +142,17 @@
 \renewcommand{\arraystretch}{0.9} % Default value: 1
 
 \input{resume/education.tex}
-%\vspace{-3mm}
+\vspace{-3mm}
 \input{resume/coursework.tex}
-%\vspace{-3mm}
+\vspace{-3mm}
 \input{resume/experience.tex}
-%\vspace{-3mm}
+\vspace{-3mm}
 \input{resume/extracurricular.tex}
-%\vspace{-3mm}
+\vspace{-3mm}
 \input{resume/projects.tex}
-%\vspace{-3mm}
+\vspace{-3mm}
 \input{resume/skills.tex}
-%\vspace{-3mm}
+\vspace{-3mm}
 
 %-------------------------------------------------------------------------------
 \end{document}
