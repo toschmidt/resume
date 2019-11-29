@@ -23,23 +23,27 @@
 \usepackage{csquotes}
 \usepackage[defaultsans]{opensans}
 
-\renewcommand{\headerfont}{\opensans}
-\renewcommand{\headerfontlight}{\opensans\fontseries{l}\selectfont}
+%\renewcommand{\headerfont}{\opensans}
+%\renewcommand{\headerfontlight}{\opensans\fontseries{l}\selectfont}
 
-\renewcommand*{\footerfont}{\opensans}
-\renewcommand*{\bodyfont}{\opensans}
-\renewcommand*{\bodyfontlight}{\opensans\fontseries{l}\selectfont}
+%\renewcommand*{\footerfont}{\opensans}
+%\renewcommand*{\bodyfont}{\opensans}
+%\renewcommand*{\bodyfontlight}{\opensans\fontseries{l}\selectfont}
 
 
-\renewcommand*{\entrypositionstyle}[1]{{\fontsize{7pt}{1em}\bodyfont\scshape\color{graytext} #1}}
+%\renewcommand*{\entrypositionstyle}[1]{{\fontsize{7pt}{1em}\bodyfont\scshape\color{graytext} #1}}
 \renewcommand*{\entrydatestyle}[1]{{\fontsize{7pt}{1em}\bodyfontlight\color{graytext} #1}}
 \renewcommand*{\entrylocationstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\color{awesome} #1}}
 \renewcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
 
+% No kapitälchen
+\renewcommand*{\entrypositionstyle}[1]{{\fontsize{7pt}{1em}\bodyfont\color{graytext} #1}}
+
+
 \renewcommand{\acvHeaderAfterSocialSkip}{0mm}
 \renewcommand{\acvHeaderAfterQuoteSkip}{0mm}
 
-\renewcommand{\acvSectionTopSkip}{0mm}
+\renewcommand{\acvSectionTopSkip}{1mm}
 \renewcommand{\acvSectionContentTopSkip}{0mm}
 
 % Define an entry of coursework information
@@ -142,17 +146,17 @@
 \renewcommand{\arraystretch}{0.9} % Default value: 1
 
 \input{resume/education.tex}
-\vspace{-3mm}
+\vspace{-1mm}
 \input{resume/coursework.tex}
-\vspace{-3mm}
+\vspace{-1mm}
 \input{resume/experience.tex}
-\vspace{-3mm}
+\vspace{-1mm}
 \input{resume/extracurricular.tex}
-\vspace{-3mm}
+\vspace{-1mm}
 \input{resume/projects.tex}
-\vspace{-3mm}
+\vspace{-1mm}
 \input{resume/skills.tex}
-\vspace{-3mm}
+\vspace{-1mm}
 
 %-------------------------------------------------------------------------------
 \end{document}
