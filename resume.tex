@@ -33,10 +33,10 @@
 %\renewcommand*{\bodyfont}{\opensans}
 %\renewcommand*{\bodyfontlight}{\opensans\fontseries{l}\selectfont}
 
-\renewcommand*{\sectionstyle}[1]{{\fontsize{13pt}{1em}\bodyfont\bfseries\color{text} #1}}
+%\renewcommand*{\sectionstyle}[1]{{\fontsize{13pt}{1em}\bodyfont\bfseries\color{text} #1}}
 %\renewcommand*{\entrypositionstyle}[1]{{\fontsize{7pt}{1em}\bodyfont\scshape\color{graytext} #1}}
 \renewcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\color{graytext} #1}}
-% \renewcommand*{\entrylocationstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\color{awesome} #1}}
+\renewcommand*{\entrylocationstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\color{graytext} #1}}
 % Do not use a special style for the location
 \renewcommand*{\entrylocationstyle}[1]{{#1}}
 \renewcommand*{\descriptionstyle}[1]{{\fontsize{9.2pt}{1em}\bodyfontlight\upshape\color{text} #1}}
@@ -126,7 +126,7 @@
 % \definecolor{lighttext}{HTML}{999999}
 
 % Set false if you don't want to highlight section with awesome color
-\setbool{acvSectionColorHighlight}{false}
+\setbool{acvSectionColorHighlight}{true}
 
 % If you would like to change the social information separator from a pipe (|) to something else
 \renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
@@ -138,7 +138,7 @@
 % Available options: circle|rectangle,edge/noedge,left/right
 % \photo[rectangle,edge,right]{./examples/profile}
 \name{Alexander}{Zellner}
-\address{Haslangstraße 33, 80689 Munich, Germany}
+\address{Pirmasenserstraße 9, 81241 Munich, Germany}
 
 \mobile{+49 151 23246400}
 \email{alexander.zellner@tum.de}
@@ -151,13 +151,6 @@
 % Print the header with above personal informations
 % Give optional argument to change alignment(C: center, L: left, R: right)
 \makecvheader[C]
-
-% Print the footer with 3 arguments(<left>, <center>, <right>)
-% Leave any of these blank if they are not needed
-% \makecvfooter
-%   {\today}
-%   {Maximilian Ammann~~~·~~~Résumé}
-%   {}
 
 \vspace{-3mm}
 
