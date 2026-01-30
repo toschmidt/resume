@@ -22,6 +22,118 @@
 \usepackage{csquotes}
 \usepackage{multirow}
 
+\usepackage[ % BibLaTeX
+	sorting=ydnt, % Sorts entries by year (descending order), name, title
+	style=verbose,
+	doi=false,
+	isbn=true,
+	url=false,
+	eprint=false,
+	backref = false, % include back references in bibliography
+	maxcitenames=3, % affects only the citations in the document body
+	maxbibnames=99, % affects only the bibliography, pass 99 to print all
+	hyperref=true,
+	block=none,
+	backend=biber % {Options: bibtex, biber}
+	]{biblatex}
+
+% Avoid splitting entries across page break (only for 3 or fewer lines)
+% Tip: http://tex.stackexchange.com/a/51261
+\AtBeginEnvironment{thebibliography}{%
+   \clubpenalty10000
+   \@clubpenalty \clubpenalty
+   \widowpenalty10000
+   \interlinepenalty5000}
+
+% Customized format, based on the Fancy CV template created by Adrien Friggeri
+% See https://github.com/ashee/cv (MIT license)
+\DeclareFieldFormat[article]{title}{#1}
+\DeclareFieldFormat[inproceedings]{title}{#1}
+\DeclareFieldFormat[misc]{title}{#1}
+\DeclareFieldFormat[report]{title}{#1}
+\DeclareFieldFormat[incollection]{title}{#1}
+
+\usepackage{xpatch}
+
+% Use \ifdefstring from etoolbox (loaded by biblatex)
+\DeclareNameFormat{author}{%
+  \ifboolexpr{
+    test {\ifdefstring{\namepartfamily}{Schmidt}}
+    and
+    test {\ifdefstring{\namepartgiven}{Tobias}}  
+  }
+  {\textbf{\namepartgiven\space\namepartfamily}}%
+  {\namepartgiven\space\namepartfamily}%
+  \ifthenelse{\value{listcount}<\value{liststop}}
+  {\addcomma\space}{}
+}%
+
+
+
+\DeclareBibliographyDriver{article}{%
+  \fontsize{10pt}{1em}\bodyfont%
+  \vspace{-2.0mm}%
+  \setlength\tabcolsep{0pt}%
+  \setlength{\extrarowheight}{0pt}%
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 2cm} R{2cm}}
+    \entrytitlestyle{\printfield{title}} & \entrydatestyle{\printfield{year}} \\
+    \hspace{2mm}\descriptionstyle{\printnames{author}} &  \\
+    \hspace{2mm}{%
+    \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
+    \usebibmacro{journal+issuetitle}%
+    \setunit{\space}%
+    \printfield{pages}%
+    \newunit%
+    \printlist{publisher}%
+    \setunit*{\addcomma\space}%
+    \printfield{year}%
+    \newunit%
+  }& \\
+  \end{tabular*}%
+  \par\vspace{\baselineskip}
+}
+
+\DeclareBibliographyDriver{inproceedings}{%
+  \fontsize{10pt}{1em}\bodyfont%
+  \vspace{-2.0mm}%
+  \setlength\tabcolsep{0pt}%
+  \setlength{\extrarowheight}{0pt}%
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 1cm} R{1cm}}
+    \entrytitlestyle{\printfield{title}} & \entrydatestyle{\printfield{year}} \\
+    \hspace{2mm}\descriptionstyle{\printnames{author}} &  \\
+    \hspace{2mm}{%
+    \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
+    \printfield{booktitle}%
+    \setunit{\addcomma\space}%
+    \printfield{year}%
+    \setunit{\addcomma\space}%
+    \printlist{location}%
+    \newunit%
+  } &
+  \end{tabular*}%
+  \par\vspace{\baselineskip}
+}
+
+\defbibenvironment{cvpublications}
+  {\list{}{%
+    \setlength{\leftmargin}{0pt}%
+    \setlength{\itemindent}{0pt}%
+    \setlength{\itemsep}{2mm}%
+    \setlength{\parsep}{0pt}%
+  }}
+  {\endlist}
+  {\item}
+
+\newenvironment{cvpublications}
+  {\list{}{%
+    \setlength{\leftmargin}{0pt}%
+    \setlength{\itemindent}{1pt}%
+    \setlength{\itemsep}{2mm}%
+    \setlength{\parsep}{1mm}%
+  }}
+  {\endlist}
+
+
 %-------------------------------------------------------------------------------
 % Style
 %-------------------------------------------------------------------------------
@@ -53,7 +165,7 @@
 \renewcommand{\acvSectionTopSkip}{1mm}
 \renewcommand{\acvSectionContentTopSkip}{0mm}
 
-\renewcommand{\arraystretch}{0.9} % Default value: 1
+\renewcommand{\arraystretch}{1} % Default value: 1
 \newcommand{\vspacestretch}{-1mm}
 \newcommand{\metacolumnsize}{3cm}
 
@@ -167,13 +279,28 @@
 
 %\vspace{-3mm}
 
+\cvsection{Summary}
+
+\vspace{1.5mm}
+\begin{center}
+  \begin{minipage}{0.95\textwidth}
+    \begin{cvparagraph}
+      Database Researcher at TUM specializing in high-performance storage engines and query optimization.
+      Proven track record of winning international programming contests and publishing at top-tier venues (VLDB, SIGMOD).
+      Experienced in building cloud-native database features at scale (AWS Redshift).
+    \end{cvparagraph}
+  \end{minipage}
+\end{center}
+
+
 \input{resume/education.tex}
-\vspace{\vspacestretch}
-\input{resume/projects.tex}
 \vspace{\vspacestretch}
 \input{resume/publications.tex}
 \vspace{\vspacestretch}
+\newpage
 \input{resume/experience.tex}
+\vspace{\vspacestretch}
+\input{resume/projects.tex}
 \vspace{\vspacestretch}
 \input{resume/honors.tex}
 \vspace{\vspacestretch}
@@ -187,3 +314,4 @@
 
 %-------------------------------------------------------------------------------
 \end{document}
+
