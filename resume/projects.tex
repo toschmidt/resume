@@ -4,23 +4,24 @@
     \centry
     {Umbra}
     {}
-    {Oct.~2022 -- ongoing}
+    {Oct.~2021 -- ongoing}
     {
         \begin{cvitems}
-            \item Hybrid query execution using vectorized and compiled query processing
-            \item Compressed query processing on strings\qquad\url{https://github.com/umbra-db/token-vldb2026}
-            \item Colibri: high-performance storage engine on SSDs and S3\qquad\url{https://github.com/umbra-db/colibri-vldb2024}
-            \item Adaptive query execution in compiling database engines
+            \item Hybrid query execution (vectorized and compiled) and sideways information passing for fast real-time analytics (ClickBench \#1)
+            \item Compressed query processing on strings using LLM token tables, $\sim$1.5$\times$ faster string-heavy queries\projecturl{github.com/umbra-db/token-vldb2026}
+            \item Colibri: hybrid column-row store for HTAP on SSDs and S3, 50$\times$ higher throughput on TPC-H\projecturl{github.com/umbra-db/colibri-vldb2024}
+            \item Dynamic reordering of compiled query plans for adaptive query execution.
         \end{cvitems}
     }
 
     \centry
     {QueryBrew}
     {}
-    {Oct.~2025 -- ongoing}
+    {Oct.~2025 -- Feb.~2026}
     {
         \begin{cvitems}
-            \item Query Optimization as a Service\qquad\url{https://querybrew.db.cit.tum.de}
+            \item Query Optimization as a Service using SQL-to-SQL rewriting with the Umbra optimizer\projecturl{querybrew.db.cit.tum.de}
+            \item Brings general unnesting and Umbra's join ordering algorithms to PostgreSQL, DuckDB, ClickHouse, and SQL Server
         \end{cvitems}
     }
 
@@ -30,27 +31,28 @@
     {Oct.~2024 -- Oct.~2025}
     {
         \begin{cvitems}
-            \item Large-scale database benchmarking using LLM-generated queries\qquad\url{https://github.com/SQL-Storm/SQLStorm}
+            \item Large-scale database benchmarking using LLM-generated queries ($\sim$18,000 queries)\projecturl{github.com/SQL-Storm/SQLStorm}
+            \item More diverse than TPC-H and TPC-DS: covers a wider range of SQL features, with 10$\times$ more distinct execution traces
         \end{cvitems}
     }
 
     \centry
     {ACM SIGMOD Programming Contest 2025}
     {}
-    {Feb.~2025 -- Jun.~2025}
+    {Feb.~2025 -- June~2025}
     {
         \begin{cvitems}
-            \item Winning solution\qquad\url{https://github.com/umbra-db/contest-sigmod2025}
+            \item Implemented zero-knowledge join optimization through incremental execution (winning solution)\projecturl{github.com/umbra-db/contest-sigmod2025}
         \end{cvitems}
     }
 
     \centry
     {RISC-V Processor}
     {}
-    {Aug.~2018 -- Feb.~2019}
+    {Aug.~2018 -- Aug.~2019}
     {
         \begin{cvitems}
-            \item Development of a multi-core RISC-V processor in VHDL on FPGAs
+            \item Development of a multi-core out-of-order RISC-V processor in VHDL on FPGAs
         \end{cvitems}
     }%
 

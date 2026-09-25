@@ -52,6 +52,7 @@
 \DeclareFieldFormat[misc]{title}{#1}
 \DeclareFieldFormat[report]{title}{#1}
 \DeclareFieldFormat[incollection]{title}{#1}
+\DeclareFieldFormat{pages}{pp.~#1}
 
 \usepackage{xpatch}
 
@@ -80,17 +81,16 @@
     \hspace{2mm}\descriptionstyle{\printnames{author}} &  \\
     \hspace{2mm}{%
     \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
-    \usebibmacro{journal+issuetitle}%
+    \printfield{journaltitle}%
     \setunit{\space}%
+    \printfield{volume}%
+    \iffieldundef{number}{}{(\printfield{number})}%
+    \setunit{\addcomma\space}%
     \printfield{pages}%
-    \newunit%
-    \printlist{publisher}%
-    \setunit*{\addcomma\space}%
-    \printfield{year}%
     \newunit%
   }& \\
   \end{tabular*}%
-  \par\vspace{\baselineskip}
+  \par\vspace{1.5mm}
 }
 
 \DeclareBibliographyDriver{inproceedings}{%
@@ -105,13 +105,13 @@
     \fontsize{8pt}{1em}\bodyfontlight\color{graytext}%
     \printfield{booktitle}%
     \setunit{\addcomma\space}%
-    \printfield{year}%
+    \printfield{pages}%
     \setunit{\addcomma\space}%
-    \printlist{location}%
+    \iffieldundef{note}{}{\textbf{\printfield{note}}}%
     \newunit%
   } &
   \end{tabular*}%
-  \par\vspace{\baselineskip}
+  \par\vspace{1.5mm}
 }
 
 \defbibenvironment{cvpublications}
@@ -180,8 +180,8 @@
   \setlength\tabcolsep{0pt}
   \setlength{\extrarowheight}{0pt}
   \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - \metacolumnsize} R{\metacolumnsize}}
-    \entrytitlestyle{#1\ifempty{#2}{}{,~\entrylocationstyle{#2}}} & \multirow[t]{2}{\metacolumnsize}{\raggedleft\entrydatestyle{#3}} \\
-    \descriptionstyle{#4} & {}
+    \entrytitlestyle{#1\ifempty{#2}{}{,~\entrylocationstyle{#2}}} & \entrydatestyle{#3} \\
+    \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#4}}
   \end{tabular*}%
 }
 
@@ -214,6 +214,36 @@
       \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}}
   \end{tabular*}%
 }
+
+% Bullet list inside an entry. The class version ends with \vspace{-4mm}, which
+% newer LaTeX kernels (2025+) honor inside table cells, making entries overlap.
+\renewenvironment{cvitems}{%
+  \vspace{-4.0mm}
+  \begin{justify}
+  \begin{itemize}[leftmargin=2ex, nosep, noitemsep]
+    \setlength{\parskip}{0pt}
+    \renewcommand{\labelitemi}{\bullet}
+}{%
+  \end{itemize}
+  \end{justify}
+}
+
+% Skills with labels flush left; the class version overflows \textwidth
+\renewenvironment{cvskills}{%
+  \vspace{\acvSectionContentTopSkip}
+  \vspace{-2.0mm}
+  \begin{center}
+    \setlength{\extrarowheight}{0pt}
+    \setlength\tabcolsep{0pt}
+    \begin{tabular*}{\textwidth}{@{} L{2.8cm} L{\textwidth - 2.8cm} @{}}
+}{%
+    \end{tabular*}
+  \end{center}
+}
+
+% Project link, right-aligned at the end of an item
+% Usage: \projecturl{<url without https://>}
+\newcommand*{\projecturl}[1]{\hfill\href{https://#1}{\entrydatestyle{#1}}\hspace{1em}\mbox{}}
 
 %-------------------------------------------------------------------------------
 % ADDITIONAL CONFIG
@@ -251,9 +281,9 @@
 % Available options: circle|rectangle,edge/noedge,left/right
 % \photo[rectangle,edge,right]{./examples/profile}
 \name{Tobias}{Schmidt}
-\address{Schleißheimer Straße 13, 85748 Garching, Germany}
+% Location shown next to the phone number in the social line
+\mobile{+49 178 1692335\acvHeaderSocialSep\faHome\acvHeaderIconSep Munich, Germany}
 
-\mobile{+49 178 1692335}
 \email{tobias.schmidt@in.tum.de}
 \github{toschmidt}
 \linkedin{to-schmidt}
@@ -285,9 +315,11 @@
 \begin{center}
   \begin{minipage}{0.95\textwidth}
     \begin{cvparagraph}
-      Database Researcher at TUM specializing in high-performance storage engines, query execution, and optimization.
-      Proven track record of winning international programming contests and publishing at top-tier venues (VLDB, SIGMOD).
-      Experienced in building cloud-native database features at scale (Amazon Redshift).
+      \hyphenpenalty=10000 \exhyphenpenalty=10000 % no hyphenation in the summary
+      Systems \& Database Researcher at TUM specializing in high-performance storage engines, query execution, and optimization.
+      Core contributor to the Umbra database system, driving performance improvements that brought it to \#1 on ClickBench, and creator of the SQLStorm benchmark.
+      Publications at VLDB, SIGMOD, and CIDR, Best Paper Award at DaMoN 2024, and winner of the ACM SIGMOD Programming Contest 2025.
+      Research internships at Microsoft Gray Systems Lab and AWS (Amazon Redshift).
     \end{cvparagraph}
   \end{minipage}
 \end{center}
@@ -295,16 +327,15 @@
 
 \input{resume/education.tex}
 \vspace{\vspacestretch}
-\input{resume/publications.tex}
-\vspace{\vspacestretch}
-\newpage
 \input{resume/experience.tex}
+\vspace{\vspacestretch}
+\input{resume/skills.tex}
+\newpage
+\input{resume/publications.tex}
 \vspace{\vspacestretch}
 \input{resume/projects.tex}
 \vspace{\vspacestretch}
 \input{resume/honors.tex}
-\vspace{\vspacestretch}
-\input{resume/skills.tex}
 %\vspace{\vspacestretch}
 %\input{resume/references.tex} % Important for later applications
 %\vspace{\vspacestretch}
@@ -314,4 +345,3 @@
 
 %-------------------------------------------------------------------------------
 \end{document}
-
