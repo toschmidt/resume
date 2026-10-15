@@ -216,7 +216,8 @@
 }
 
 % Bullet list inside an entry. The class version ends with \vspace{-4mm}, which
-% newer LaTeX kernels (2025+) honor inside table cells, making entries overlap.
+% newer array packages (m-cell handling changed 2022/09) honor, making entries
+% overlap; older ones (e.g. TeX Live 2022) need it to avoid a gap after entries.
 \renewenvironment{cvitems}{%
   \vspace{-4.0mm}
   \begin{justify}
@@ -226,6 +227,7 @@
 }{%
   \end{itemize}
   \end{justify}
+  \IfPackageAtLeastTF{array}{2022/09/04}{}{\vspace{-4.0mm}}%
 }
 
 % Skills with labels flush left; the class version overflows \textwidth
@@ -317,7 +319,7 @@
     \begin{cvparagraph}
       \hyphenpenalty=10000 \exhyphenpenalty=10000 % no hyphenation in the summary
       Systems \& Database Researcher at TUM specializing in high-performance storage engines, query execution, and optimization.
-      Core contributor to the Umbra database system, driving performance improvements that brought it to \#1 on ClickBench, and creator of the SQLStorm benchmark.
+      Core contributor to the Umbra database system, focusing on query execution performance (top results on ClickBench), and creator of the SQLStorm benchmark.
       Publications at VLDB, SIGMOD, and CIDR, Best Paper Award at DaMoN 2024, and winner of the ACM SIGMOD Programming Contest 2025.
       Research internships at Microsoft Gray Systems Lab and AWS (Amazon Redshift).
     \end{cvparagraph}
